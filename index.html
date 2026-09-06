@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Terminal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #00ff00;
+      font-family: 'Courier New', 'Courier', monospace;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        linear-gradient(0deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(0, 255, 0, 0.05) 25%, rgba(0, 255, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 0, 0.05) 75%, rgba(0, 255, 0, 0.05) 76%, transparent 77%, transparent);
+      background-size: 50px 50px;
+      animation: scan 8s linear infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 50px;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .header {
+      border: 2px solid #00ff00;
+      padding: 20px;
+      margin-bottom: 30px;
+      background-color: rgba(0, 255, 0, 0.02);
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .system-info {
+      font-size: 12px;
+      color: #00aa00;
+      margin-bottom: 10px;
+      line-height: 1.8;
+    }
+
+    .divider {
+      border-top: 1px solid #00ff00;
+      margin: 15px 0;
+      opacity: 0.5;
+    }
+
+    .welcome-text {
+      font-size: 14px;
+      margin-top: 15px;
+      color: #00ff00;
+    }
+
+    .main-content {
+      margin-bottom: 30px;
+    }
+
+    .command-section {
+      margin-bottom: 25px;
+      padding: 15px;
+      border-left: 3px solid #00ff00;
+      background-color: rgba(0, 255, 0, 0.02);
+    }
+
+    .command-prompt {
+      color: #00ff00;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .command-prompt::before {
+      content: '$ ';
+      color: #00aa00;
+      margin-right: 5px;
+    }
+
+    .command-output {
+      color: #00ff00;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-left: 20px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .section-title {
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      text-decoration: underline;
+      text-decoration-color: #00aa00;
+      text-underline-offset: 5px;
+    }
+
+    .menu {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #00aa00;
+      background-color: rgba(0, 255, 0, 0.02);
+    }
+
+    .menu-item {
+      padding: 8px 0;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .menu-item::before {
+      content: '[';
+      color: #00aa00;
+      margin-right: 5px;
+    }
+
+    .menu-item::after {
+      content: ']';
+      color: #00aa00;
+      margin-left: 5px;
+    }
+
+    .menu-item:hover {
+      color: #00ffff;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+
+    .footer {
+      border: 1px solid #00ff00;
+      padding: 15px;
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      background-color: rgba(0, 255, 0, 0.02);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 16px;
+      background-color: #00ff00;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% {
+        opacity: 1;
+      }
+      50%, 100% {
+        opacity: 0;
+      }
+    }
+
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #00ff00;
+      color: #0a0a0a;
+      padding: 5px 15px;
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-time {
+      font-family: 'Courier New', monospace;
+    }
+
+    body {
+      padding-bottom: 25px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .command-output {
+        font-size: 12px;
+      }
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗
+        ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║
+           ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║
+           ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║
+           ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║██║
+           ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝
+      </div>
+      <div class="divider"></div>
+      <div class="system-info">
+        System: GNU/Linux x86_64
+        Version: 1.0.0
+        Kernel: 5.15.0-generic
+        Date: <span id="date-display"></span>
+      </div>
+      <div class="welcome-text">
+        Welcome to Terminal Interface v1.0
+        Type 'help' for available commands
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="section-title">≫ ABOUT THIS SYSTEM</div>
+      <div class="command-section">
+        <div class="command-prompt">whoami</div>
+        <div class="command-output">Welcome User - Developer Terminal Interface</div>
+      </div>
+
+      <div class="section-title">≫ QUICK COMMANDS</div>
+      <div class="menu">
+        <div class="menu-item" onclick="navigate('#about')">about - About this system</div>
+        <div class="menu-item" onclick="navigate('#projects')">projects - View projects</div>
+        <div class="menu-item" onclick="navigate('#contact')">contact - Get in touch</div>
+        <div class="menu-item" onclick="navigate('#settings')">settings - Configure</div>
+        <div class="menu-item" onclick="navigate('#help')">help - Show help menu</div>
+      </div>
+
+      <div class="section-title">≫ SYSTEM STATUS</div>
+      <div class="command-section">
+        <div class="command-prompt">status</div>
+        <div class="command-output">
+┌─────────────────────────────────────┐
+│  System Status       [OPERATIONAL]  │
+│  Network           [CONNECTED]      │
+│  Storage Available [7.2 TB]         │
+│  Memory Usage      [42%]            │
+│  CPU Load          [12%]            │
+└─────────────────────────────────────┘
+        </div>
+      </div>
+
+      <div class="section-title">≫ RECENT ACTIVITY</div>
+      <div class="command-section">
+        <div class="command-prompt">last -5</div>
+        <div class="command-output">
+[12:45] System initialized successfully
+[11:30] All services running
+[10:15] Database sync completed
+[09:00] Security scan passed
+[08:30] Backup completed
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Copyright © 2024 | Type 'exit' to close terminal<span class="cursor"></span></div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span>TERMINAL v1.0</span>
+    <span class="status-time"><span id="time-display"></span> | SYSTEM OK</span>
+  </div>
+
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const date = now.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      document.getElementById('time-display').textContent = `${hours}:${minutes}`;
+      document.getElementById('date-display').textContent = `${date}`;
+    }
+
+    function navigate(section) {
+      alert(`Navigating to: ${section}\n\nIn a full application, this would load the corresponding section.`);
+    }
+
+    // Update time every minute
+    updateDateTime();
+    setInterval(updateDateTime, 60000);
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        navigate('#help');
+      }
+    });
+  </script>
+</body>
+</html>
